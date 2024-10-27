@@ -22,7 +22,7 @@
 
 / {
         model = "TP-Link Deco M4R v3";
-        compatible = "tp-link,deco-m4r-v3", "qcom,ipq4019";
+        compatible = "tplink,deco-m4r-v3", "qcom,ipq4019";
 
         aliases {
                 led-boot = &led_blue;
