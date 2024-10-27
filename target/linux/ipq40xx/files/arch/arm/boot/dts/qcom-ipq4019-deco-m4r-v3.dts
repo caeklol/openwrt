@@ -162,77 +162,77 @@
 					};
 					partition1@30000 {
 						label = "0:BOOTCONFIG";
-						reg = <0x00030000 0x00040000>;
+						reg = <0x00030000 0x00010000>;
 						read-only;
 					};
 					partition2@40000 {
 						label = "0:MIBIB";
-						reg = <0x00040000 0x00050000>;
+						reg = <0x00040000 0x00010000>;
 						read-only;
 					};
 					partition3@50000 {
 						label = "0:BOOTCONFIG1";
-						reg = <0x00050000 0x00060000>;
+						reg = <0x00050000 0x00010000>;
 						read-only;
 					};
 					partition4@60000 {
 						label = "0:QSEE";
-						reg = <0x00060000 0x000c0000>;
+						reg = <0x00060000 0x00060000>;
 						read-only;
 					};
 					partition5@c0000 {
 						label = "0:CDT";
-						reg = <0x000c0000 0x000d0000>;
+						reg = <0x000c0000 0x00010000>;
 						read-only;
 					};
 					partition6@d0000 {
 						label = "0:DDRPARAMS";
-						reg = <0x000d0000 0x000e0000>;
+						reg = <0x000d0000 0x00010000>;
 						read-only;
 					};
 					partition7@e0000 {
 						label = "0:APPSBLENV";
-						reg = <0x000e0000 0x000f0000>;
+						reg = <0x000e0000 0x00010000>;
 						read-only;
 					};
 					partition8@f0000 {
 						label = "0:APPSBL";
-						reg = <0x000f0000 0x00170000>;
+						reg = <0x000f0000 0x00080000>;
 						read-only;
 					};
 					partition9@170000 {
 						label = "0:ART";
-						reg = <0x00170000 0x00180000>;
+						reg = <0x00170000 0x00010000>;
 						read-only;
 					};
 					partition10@180000 {
 						label = "OPAQUE";
-						reg = <0x00180000 0x00240000>;
+						reg = <0x00180000 0x000c0000>;
 						read-only;
 					};
 					partition11@240000 {
 						label = "0:HLOS";
-						reg = <0x00240000 0x00560000>;
+						reg = <0x00240000 0x00320000>;
 						read-only;
 					};
 					partition12@540000 {
 						label = "0:rootfs";
-						reg = <0x00560000 0x00fa0000>;
+						reg = <0x00560000 0x00a40000>;
 						read-only;
 					};
 					partition13@d10000 {
 						label = "0:APPSBL_1";
-						reg = <0x00fa0000 0x01020000>;
+						reg = <0x00fa0000 0x00080000>;
 						read-only;
 					};
 					partition14@d10000 {
 						label = "1:HLOS";
-						reg = <0x01020000 0x01340000>;
+						reg = <0x01020000 0x00320000>;
 						read-only;
 					};
 					partition15@d10000 {
 						label = "1:rootfs";
-						reg = <0x01340000 0x02000000>;
+						reg = <0x01340000 0x00cc0000>;
 						read-only;
 					};
 				};
@@ -295,33 +295,33 @@
 		};
 
 		mdio@90000 {
-                        status = "okay";
-                };
+			status = "okay";
+		};
 
-                tcsr@1949000 {
-                        compatible = "qcom,tcsr";
-                        reg = <0x1949000 0x100>;
-                        qcom,wifi_glb_cfg = <TCSR_WIFI_GLB_CFG>;
-                };
+		tcsr@1949000 {
+			compatible = "qcom,tcsr";
+			reg = <0x1949000 0x100>;
+			qcom,wifi_glb_cfg = <TCSR_WIFI_GLB_CFG>;
+		};
 
-                tcsr@1957000 {
-                        compatible = "qcom,tcsr";
-                        reg = <0x1957000 0x100>;
-                        qcom,wifi_noc_memtype_m0_m2 = <TCSR_WIFI_NOC_MEMTYPE_M0_M2>;
-                };
+		tcsr@1957000 {
+			compatible = "qcom,tcsr";
+			reg = <0x1957000 0x100>;
+			qcom,wifi_noc_memtype_m0_m2 = <TCSR_WIFI_NOC_MEMTYPE_M0_M2>;
+		};
 
-                wifi_0: wifi@a000000 {
-                        pinctrl-0 = <&wifi_pins>;
-                        pinctrl-names = "default";
-                        qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
-                        status = "okay";
-                };
+		wifi_0: wifi@a000000 {
+			pinctrl-0 = <&wifi_pins>;
+			pinctrl-names = "default";
+			qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
+			status = "okay";
+		};
 
-                wifi_1: wifi@a800000 {
-                        qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
-                        status = "okay";
-                };
-        };
+		wifi_1: wifi@a800000 {
+			qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
+			status = "okay";
+		};
+	};
 };
 
 &crypto {
