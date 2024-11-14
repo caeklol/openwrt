@@ -1123,7 +1123,7 @@ define Device/tp-link_deco-m4r-v3
 	DEVICE_DTS := qcom-ipq4019-deco-m4r-v3
 	#DEVICE_PACKAGES := ipq-wifi-tp-link_deco_m4r_v3
 	#BOARD_NAME := deco-m4r-v3
-	#TPLINK_BOARD_ID := DECO-M4R-V3
+	TPLINK_BOARD_ID := DECO-M4R-V3
 	IMAGE_SIZE := 20000k
 	IMAGES := factory.bin sysupgrade.bin
 	IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
