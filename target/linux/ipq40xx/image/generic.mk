@@ -1121,6 +1121,7 @@ define Device/tp-link_deco-m4r-v3
 	DEVICE_VARIANT := V3
 	SOC := qcom-ipq4019
 	DEVICE_DTS := qcom-ipq4019-deco-m4r-v3
+	DEVICE_DTS_CONFIG := config@ap.dk04.1-c1
 	#DEVICE_PACKAGES := ipq-wifi-tp-link_deco_m4r_v3
 	#BOARD_NAME := deco-m4r-v3
 	DEVICE_DTS_DELIMITER := @
