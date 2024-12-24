@@ -1115,7 +1115,9 @@ endef
 #TARGET_DEVICES += tel_x1pro
 
 define Device/tp-link_deco-m4r-v3
-	$(call Device/FitImage)
+	KERNEL_SUFFIX := -uImage.itb
+	KERNEL = kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb | pad-to 64k
+	KERNEL_NAME := Image
 	DEVICE_VENDOR := TP-Link
 	DEVICE_MODEL := Deco-M4R
 	DEVICE_VARIANT := V3
