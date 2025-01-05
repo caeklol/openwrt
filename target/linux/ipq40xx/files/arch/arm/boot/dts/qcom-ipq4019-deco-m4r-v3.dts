@@ -33,6 +33,7 @@
                 led-failsafe = &led_red;
                 led-running = &led_green;
                 led-upgrade = &led_red;
+				label-mac-device = &swport4;
         };
 
         leds {
@@ -54,212 +55,18 @@
                 };
         };
 
-	keys {
-		compatible = "gpio-keys";
+		keys {
+			compatible = "gpio-keys";
 
-		reset {
-			label = "reset";
-			gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_RESTART>;
-		};
-	};
-
-        soc {
-                pinctrl@1000000 {
-                        serial_0_pins: serial_0_pinmux {
-                                pinmux {
-                                        pins = "gpio16", "gpio17";
-                                        function = "blsp_uart0";
-                                        bias-disable;
-                                };
-                        };
-
-                        serial_1_pins: serial_1_pinmux {
-                                pinmux {
-                                        pins = "gpio8", "gpio9", "gpio10", "gpio11";
-                                        function = "blsp_uart1";
-                                        bias-disable;
-                                };
-                        };
-
-                        spi_0_pins: spi_0_pinmux {
-                                pinmux {
-                                        pins = "gpio13", "gpio14", "gpio15";
-                                        function = "blsp_spi0";
-                                };
-                                pinmux_cs {
-                                        pins = "gpio12";
-                                        function = "gpio";
-                                };
-                                pinconf {
-                                        pins = "gpio13", "gpio14", "gpio15";
-                                        drive-strength = <12>;
-                                        bias-disable;
-                                };
-                                pinconf_cs {
-                                        pins = "gpio12";
-                                        drive-strength = <2>;
-                                        bias-disable;
-                                        output-high;
-                                };
-                        };
-
-                        i2c_0_pins: i2c_0_pinmux {
-                                pinmux {
-                                        pins = "gpio20", "gpio21";
-                                        function = "blsp_i2c0";
-                                };
-                                pinconf {
-                                        pins = "gpio20", "gpio21";
-                                        drive-strength = <16>;
-                                        bias-disable;
-                                };
-                        };
-
-                        wifi_pins: wifi_pinmux {
-                                pinmux_1 {
-                                        pins = "gpio37";
-                                        function = "gpio";
-                                        drive-strength = <6>;
-                                        bias-pull-up;
-                                        output-high;
-                                };
-
-                                pinmux_2 {
-                                        pins = "gpio42";
-                                        function = "gpio";
-                                        drive-strength = <6>;
-                                        bias-pull-up;
-                                        output-high;
-                                };
-
-                                pinmux_3 {
-                                        pins = "gpio43";
-                                        function = "gpio";
-                                        drive-strength = <6>;
-                                        bias-pull-up;
-                                };
-                        };
-                };
-
-		spi_0: spi@78b5000 {
-			pinctrl-0 = <&spi_0_pins>;
-			pinctrl-names = "default";
-			status = "okay";
-			cs-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-
-			m25p80@0 {
-				reg = <0>;
-				compatible = "jedec,spi-nor";
-				spi-max-frequency = <24000000>;
-				broken-flash-reset;
-
-				partitions {
-					#address-cells = <1>;
-					#size-cells = <1>;
-					compatible = "fixed-partitions";
-
-					partition0@0 {
-						label = "0:SBL1";
-						reg = <0x00000000 0x00030000>;
-						read-only;
-					};
-					partition1@30000 {
-						label = "0:BOOTCONFIG";
-						reg = <0x00030000 0x00010000>;
-						read-only;
-					};
-					partition2@40000 {
-						label = "0:MIBIB";
-						reg = <0x00040000 0x00010000>;
-						read-only;
-					};
-					partition3@50000 {
-						label = "0:BOOTCONFIG1";
-						reg = <0x00050000 0x00010000>;
-						read-only;
-					};
-					partition4@60000 {
-						label = "0:QSEE";
-						reg = <0x00060000 0x00060000>;
-						read-only;
-					};
-					partition5@c0000 {
-						label = "0:CDT";
-						reg = <0x000c0000 0x00010000>;
-						read-only;
-					};
-					partition6@d0000 {
-						label = "0:DDRPARAMS";
-						reg = <0x000d0000 0x00010000>;
-						read-only;
-					};
-					partition7@e0000 {
-						label = "0:APPSBLENV";
-						reg = <0x000e0000 0x00010000>;
-						read-only;
-					};
-					partition8@f0000 {
-						label = "0:APPSBL";
-						reg = <0x000f0000 0x00080000>;
-						read-only;
-					};
-					partition9@170000 {
-						label = "0:ART";
-						reg = <0x00170000 0x00010000>;
-						read-only;
-
-						compatible = "nvmem-cells";
-						#address-cells = <1>;
-						#size-cells = <1>;
-						precal_art_1000: precal@1000 {
-							reg = <0x1000 0x2f20>;
-						};
-						precal_art_5000: precal@5000 {
-							reg = <0x5000 0x2f20>;
-						};
-					};
-					partition10@180000 {
-						label = "OPAQUE";
-						reg = <0x00180000 0x000c0000>;
-						read-only;
-
-						compatible = "nvmem-cells";
-						#address-cells = <1>;
-						#size-cells = <1>;
-						macaddr_config_0: macaddr@0 {
-							reg = <0x8 0x6>;
-						};
-					};
-					partition11@240000 {
-						label = "0:HLOS";
-						reg = <0x00240000 0x00320000>;
-						read-only;
-					};
-					partition12@540000 {
-						label = "0:rootfs";
-						reg = <0x00560000 0x00a40000>;
-						read-only;
-					};
-					partition13@d10000 {
-						label = "0:APPSBL_1";
-						reg = <0x00fa0000 0x00080000>;
-						read-only;
-					};
-					partition14@d10000 {
-						label = "1:HLOS";
-						reg = <0x01020000 0x00430000>;
-						read-only;
-					};
-					partition15@d10000 {
-						label = "1:rootfs";
-						reg = <0x01450000 0x00bb0000>;
-						read-only;
-					};
-				};
+			reset {
+				label = "reset";
+				gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
+				linux,code = <KEY_RESTART>;
 			};
 		};
 
+		
+        soc {
 		i2c_0: i2c@78b7000 {
 			pinctrl-0 = <&i2c_0_pins>;
 			pinctrl-names = "default";
@@ -278,6 +85,19 @@
 			status = "okay";
 		};
 
+		ess_tcsr@1953000 {
+			compatible = "qcom,tcsr";
+			reg = <0x1953000 0x1000>;
+			qcom,ess-interface-select = <TCSR_ESS_PSGMII>;
+		};
+
+
+		tcsr@1949000 {
+			compatible = "qcom,tcsr";
+			reg = <0x1949000 0x100>;
+			qcom,wifi_glb_cfg = <TCSR_WIFI_GLB_CFG>;
+		};
+
 		tcsr@194b000 {
 			compatible = "qcom,tcsr";
 			reg = <0x194b000 0x100>;
@@ -285,45 +105,6 @@
 			status = "okay";
 		};
 
-		edma@c080000 {
-			status = "okay";
-
-			gmac0 {
-				qcom,poll_required = <0x1>;
-				qcom,phy_mdio_addr = <0x4>;
-				vlan_tag = <0x2 0x20>;
-			};
-
-			gmac1 {
-				qcom,poll_required = <0x1>;
-				qcom,phy_mdio_addr = <0x3>;
-				vlan_tag = <0x1 0x1e>;
-			};
-		};
-
-		ess-switch@c000000 {
-			status = "okay";
-		};
-
-		ess_tcsr@1953000 {
-				compatible = "qcom,tcsr";
-				reg = <0x1953000 0x1000>;
-				qcom,ess-interface-select = <TCSR_ESS_PSGMII>;
-			};
-
-		ess-psgmii@98000 {
-			status = "okay";
-		};
-
-		mdio@90000 {
-			status = "okay";
-		};
-
-		tcsr@1949000 {
-			compatible = "qcom,tcsr";
-			reg = <0x1949000 0x100>;
-			qcom,wifi_glb_cfg = <TCSR_WIFI_GLB_CFG>;
-		};
 
 		tcsr@1957000 {
 			compatible = "qcom,tcsr";
@@ -336,48 +117,235 @@
 			pinctrl-names = "default";
 			qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
 			status = "okay";
+			nvmem-cell-names = "pre-calibration", "mac-address";
+			nvmem-cells = <&precal_art_1000>, <&macaddr_config_0>;
+			mac-address-increment = <2>;
 		};
 
 		wifi_1: wifi@a800000 {
 			qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
 			status = "okay";
+			nvmem-cell-names = "pre-calibration", "mac-address";
+			nvmem-cells = <&precal_art_5000>, <&macaddr_config_0>;
+			mac-address-increment = <3>;
 		};
 	};
 };
 
-&crypto {
-	status = "okay";
+&tlmm {
+	serial_0_pins: serial_0_pinmux {
+						pinmux {
+								pins = "gpio16", "gpio17";
+								function = "blsp_uart0";
+								bias-disable;
+						};
+				};
+
+				serial_1_pins: serial_1_pinmux {
+						pinmux {
+								pins = "gpio8", "gpio9", "gpio10", "gpio11";
+								function = "blsp_uart1";
+								bias-disable;
+						};
+				};
+
+				spi_0_pins: spi_0_pinmux {
+						pinmux {
+								pins = "gpio13", "gpio14", "gpio15";
+								function = "blsp_spi0";
+						};
+						pinmux_cs {
+								pins = "gpio12";
+								function = "gpio";
+						};
+						pinconf {
+								pins = "gpio13", "gpio14", "gpio15";
+								drive-strength = <12>;
+								bias-disable;
+						};
+						pinconf_cs {
+								pins = "gpio12";
+								drive-strength = <2>;
+								bias-disable;
+								output-high;
+						};
+				};
+
+				i2c_0_pins: i2c_0_pinmux {
+						pinmux {
+								pins = "gpio20", "gpio21";
+								function = "blsp_i2c0";
+						};
+						pinconf {
+								pins = "gpio20", "gpio21";
+								drive-strength = <16>;
+								bias-disable;
+						};
+				};
+
+				wifi_pins: wifi_pinmux {
+						pinmux_1 {
+								pins = "gpio37";
+								function = "gpio";
+								drive-strength = <6>;
+								bias-pull-up;
+								output-high;
+						};
+
+						pinmux_2 {
+								pins = "gpio42";
+								function = "gpio";
+								drive-strength = <6>;
+								bias-pull-up;
+								output-high;
+						};
+
+						pinmux_3 {
+								pins = "gpio43";
+								function = "gpio";
+								drive-strength = <6>;
+								bias-pull-up;
+						};
+				};
+
 };
 
-&cryptobam {
+&blsp1_spi1 {
+	pinctrl-0 = <&spi_0_pins>;
+	pinctrl-names = "default";
 	status = "okay";
+	cs-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+
+	m25p80@0 {
+		reg = <0>;
+		compatible = "jedec,spi-nor";
+		spi-max-frequency = <24000000>;
+		broken-flash-reset;
+
+		partitions {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			compatible = "fixed-partitions";
+
+			partition0@0 {
+				label = "0:SBL1";
+				reg = <0x00000000 0x00030000>;
+				read-only;
+			};
+			partition1@30000 {
+				label = "0:BOOTCONFIG";
+				reg = <0x00030000 0x00010000>;
+				read-only;
+			};
+			partition2@40000 {
+				label = "0:MIBIB";
+				reg = <0x00040000 0x00010000>;
+				read-only;
+			};
+			partition3@50000 {
+				label = "0:BOOTCONFIG1";
+				reg = <0x00050000 0x00010000>;
+				read-only;
+			};
+			partition4@60000 {
+				label = "0:QSEE";
+				reg = <0x00060000 0x00060000>;
+				read-only;
+			};
+			partition5@c0000 {
+				label = "0:CDT";
+				reg = <0x000c0000 0x00010000>;
+				read-only;
+			};
+			partition6@d0000 {
+				label = "0:DDRPARAMS";
+				reg = <0x000d0000 0x00010000>;
+				read-only;
+			};
+			partition7@e0000 {
+				label = "0:APPSBLENV";
+				reg = <0x000e0000 0x00010000>;
+				read-only;
+			};
+			partition8@f0000 {
+				label = "0:APPSBL";
+				reg = <0x000f0000 0x00080000>;
+				read-only;
+			};
+			partition9@170000 {
+				label = "0:ART";
+				reg = <0x00170000 0x00010000>;
+				read-only;
+
+				compatible = "nvmem-cells";
+				#address-cells = <1>;
+				#size-cells = <1>;
+				precal_art_1000: precal@1000 {
+					reg = <0x1000 0x2f20>;
+				};
+				precal_art_5000: precal@5000 {
+					reg = <0x5000 0x2f20>;
+				};
+			};
+			partition10@180000 {
+				label = "OPAQUE";
+				reg = <0x00180000 0x000c0000>;
+				read-only;
+
+				compatible = "nvmem-cells";
+				#address-cells = <1>;
+				#size-cells = <1>;
+				macaddr_config_0: macaddr@0 {
+					reg = <0x8 0x6>;
+				};
+			};
+			partition11@240000 {
+				label = "0:HLOS";
+				reg = <0x00240000 0x00320000>;
+				read-only;
+			};
+			partition12@540000 {
+				label = "0:rootfs";
+				reg = <0x00560000 0x00a40000>;
+				read-only;
+			};
+			partition13@d10000 {
+				label = "0:APPSBL_1";
+				reg = <0x00fa0000 0x00080000>;
+				read-only;
+			};
+			partition14@d10000 {
+				label = "1:HLOS";
+				reg = <0x01020000 0x00430000>;
+				read-only;
+			};
+			partition15@d10000 {
+				label = "1:rootfs";
+				reg = <0x01450000 0x00bb0000>;
+				read-only;
+			};
+		};
+	};
 };
 
-&watchdog {
+
+&swport4 {
 	status = "okay";
+	label = "lan";
+
+	nvmem-cell-names = "mac-address";
+	nvmem-cells = <&macaddr_config_0>;
+};
+
+&swport5 {
+	status = "okay";
+	label = "wan";
+
+	nvmem-cell-names = "mac-address";
+	nvmem-cells = <&macaddr_config_0>;
+	mac-address-increment = <1>;
 };
 
 &blsp_dma {
 	status = "okay";
 };
-
-&usb2 {
-	status = "okay";
-};
-
-&usb2_hs_phy {
-	status = "okay";
-};
-
-&usb3 {
-	status = "okay";
-};
-
-&usb3_hs_phy {
-	status = "okay";
-};
-
-&usb3_ss_phy {
-	status = "okay";
-};
-
