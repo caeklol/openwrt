@@ -66,70 +66,38 @@
 		};
 
 		
-        soc {
-		i2c_0: i2c@78b7000 {
-			pinctrl-0 = <&i2c_0_pins>;
-			pinctrl-names = "default";
-			status = "okay";
+		soc {
+			tcsr@194b000 {
+				compatible = "qcom,tcsr";
+				reg = <0x194b000 0x100>;
+				qcom,usb-hsphy-mode-select = <TCSR_USB_HSPHY_HOST_MODE>;
+				status = "okay";
+			};
+
+			tcsr@1949000 {
+				compatible = "qcom,tcsr";
+				reg = <0x1949000 0x100>;
+				qcom,wifi_glb_cfg = <TCSR_WIFI_GLB_CFG>;
+			};
+
+			tcsr@1957000 {
+				compatible = "qcom,tcsr";
+				reg = <0x1957000 0x100>;
+				qcom,wifi_noc_memtype_m0_m2 = <TCSR_WIFI_NOC_MEMTYPE_M0_M2>;
+			};
+
+			ess_tcsr@1953000 {
+				compatible = "qcom,tcsr";
+				reg = <0x1953000 0x1000>;
+				qcom,ess-interface-select = <TCSR_ESS_PSGMII>;
+			};
+
+			i2c_0: i2c@78b7000 {
+				pinctrl-0 = <&i2c_0_pins>;
+				pinctrl-names = "default";
+				status = "okay";
+			};
 		};
-
-		serial_0: serial@78af000 {
-			pinctrl-0 = <&serial_0_pins>;
-			pinctrl-names = "default";
-			status = "okay";
-		};
-
-		serial_1: serial@78b0000 {
-			pinctrl-0 = <&serial_1_pins>;
-			pinctrl-names = "default";
-			status = "okay";
-		};
-
-		ess_tcsr@1953000 {
-			compatible = "qcom,tcsr";
-			reg = <0x1953000 0x1000>;
-			qcom,ess-interface-select = <TCSR_ESS_PSGMII>;
-		};
-
-
-		tcsr@1949000 {
-			compatible = "qcom,tcsr";
-			reg = <0x1949000 0x100>;
-			qcom,wifi_glb_cfg = <TCSR_WIFI_GLB_CFG>;
-		};
-
-		tcsr@194b000 {
-			compatible = "qcom,tcsr";
-			reg = <0x194b000 0x100>;
-			qcom,usb-hsphy-mode-select = <TCSR_USB_HSPHY_HOST_MODE>;
-			status = "okay";
-		};
-
-
-		tcsr@1957000 {
-			compatible = "qcom,tcsr";
-			reg = <0x1957000 0x100>;
-			qcom,wifi_noc_memtype_m0_m2 = <TCSR_WIFI_NOC_MEMTYPE_M0_M2>;
-		};
-
-		wifi_0: wifi@a000000 {
-			pinctrl-0 = <&wifi_pins>;
-			pinctrl-names = "default";
-			qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
-			status = "okay";
-			nvmem-cell-names = "pre-calibration", "mac-address";
-			nvmem-cells = <&precal_art_1000>, <&macaddr_config_0>;
-			mac-address-increment = <2>;
-		};
-
-		wifi_1: wifi@a800000 {
-			qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
-			status = "okay";
-			nvmem-cell-names = "pre-calibration", "mac-address";
-			nvmem-cells = <&precal_art_5000>, <&macaddr_config_0>;
-			mac-address-increment = <3>;
-		};
-	};
 };
 
 &tlmm {
@@ -329,6 +297,35 @@
 };
 
 
+&wifi0 {
+	pinctrl-0 = <&wifi_pins>;
+	pinctrl-names = "default";
+	qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
+	status = "okay";
+	nvmem-cell-names = "pre-calibration", "mac-address";
+	nvmem-cells = <&precal_art_1000>, <&macaddr_config_0>;
+	mac-address-increment = <2>;
+};
+
+&wifi1 {
+	qcom,ath10k-calibration-variant = "TP-Link_Deco_M4R_v3";
+	status = "okay";
+	nvmem-cell-names = "pre-calibration", "mac-address";
+	nvmem-cells = <&precal_art_5000>, <&macaddr_config_0>;
+	mac-address-increment = <3>;
+};
+
+&blsp1_uart1 {
+	pinctrl-0 = <&serial_0_pins>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+&blsp1_uart2 {
+	pinctrl-0 = <&serial_1_pins>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
 &swport4 {
 	status = "okay";
 	label = "lan";
@@ -347,5 +344,20 @@
 };
 
 &blsp_dma {
+	status = "okay";
+};
+
+&switch {
+	status = "okay";
+};
+
+&mdio {
+	status = "okay";
+};
+
+&watchdog {
+	status = "okay";
+};
+&gmac {
 	status = "okay";
 };
