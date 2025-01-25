@@ -101,80 +101,80 @@
 };
 
 &tlmm {
-	serial_0_pins: serial_0_pinmux {
-						pinmux {
-								pins = "gpio16", "gpio17";
-								function = "blsp_uart0";
-								bias-disable;
-						};
+		serial_0_pins: serial_0_pinmux {
+				pinmux {
+						pins = "gpio16", "gpio17";
+						function = "blsp_uart0";
+						bias-disable;
+				};
+		};
+
+		serial_1_pins: serial_1_pinmux {
+				pinmux {
+						pins = "gpio8", "gpio9", "gpio10", "gpio11";
+						function = "blsp_uart1";
+						bias-disable;
+				};
+		};
+
+		spi_0_pins: spi_0_pinmux {
+				pinmux {
+						pins = "gpio13", "gpio14", "gpio15";
+						function = "blsp_spi0";
+				};
+				pinmux_cs {
+						pins = "gpio12";
+						function = "gpio";
+				};
+				pinconf {
+						pins = "gpio13", "gpio14", "gpio15";
+						drive-strength = <12>;
+						bias-disable;
+				};
+				pinconf_cs {
+						pins = "gpio12";
+						drive-strength = <2>;
+						bias-disable;
+						output-high;
+				};
+		};
+
+		i2c_0_pins: i2c_0_pinmux {
+				pinmux {
+						pins = "gpio20", "gpio21";
+						function = "blsp_i2c0";
+				};
+				pinconf {
+						pins = "gpio20", "gpio21";
+						drive-strength = <16>;
+						bias-disable;
+				};
+		};
+
+		wifi_pins: wifi_pinmux {
+				pinmux_1 {
+						pins = "gpio37";
+						function = "gpio";
+						drive-strength = <6>;
+						bias-pull-up;
+						output-high;
 				};
 
-				serial_1_pins: serial_1_pinmux {
-						pinmux {
-								pins = "gpio8", "gpio9", "gpio10", "gpio11";
-								function = "blsp_uart1";
-								bias-disable;
-						};
+				pinmux_2 {
+						pins = "gpio42";
+						function = "gpio";
+						drive-strength = <6>;
+						bias-pull-up;
+						output-high;
 				};
 
-				spi_0_pins: spi_0_pinmux {
-						pinmux {
-								pins = "gpio13", "gpio14", "gpio15";
-								function = "blsp_spi0";
-						};
-						pinmux_cs {
-								pins = "gpio12";
-								function = "gpio";
-						};
-						pinconf {
-								pins = "gpio13", "gpio14", "gpio15";
-								drive-strength = <12>;
-								bias-disable;
-						};
-						pinconf_cs {
-								pins = "gpio12";
-								drive-strength = <2>;
-								bias-disable;
-								output-high;
-						};
+				pinmux_3 {
+						pins = "gpio43";
+						function = "gpio";
+						drive-strength = <6>;
+						bias-pull-up;
 				};
-
-				i2c_0_pins: i2c_0_pinmux {
-						pinmux {
-								pins = "gpio20", "gpio21";
-								function = "blsp_i2c0";
-						};
-						pinconf {
-								pins = "gpio20", "gpio21";
-								drive-strength = <16>;
-								bias-disable;
-						};
-				};
-
-				wifi_pins: wifi_pinmux {
-						pinmux_1 {
-								pins = "gpio37";
-								function = "gpio";
-								drive-strength = <6>;
-								bias-pull-up;
-								output-high;
-						};
-
-						pinmux_2 {
-								pins = "gpio42";
-								function = "gpio";
-								drive-strength = <6>;
-								bias-pull-up;
-								output-high;
-						};
-
-						pinmux_3 {
-								pins = "gpio43";
-								function = "gpio";
-								drive-strength = <6>;
-								bias-pull-up;
-						};
-				};
+		};
 
 };
 
@@ -296,6 +296,41 @@
 	};
 };
 
+&blsp_dma {
+	status = "okay";
+};
+
+&switch {
+	status = "okay";
+};
+
+&mdio {
+	status = "okay";
+};
+
+&watchdog {
+	status = "okay";
+};
+&gmac {
+	status = "okay";
+};
+
+&swport4 {
+	status = "okay";
+	label = "wan";
+
+	nvmem-cell-names = "mac-address";
+	nvmem-cells = <&macaddr_config_0>;
+};
+
+&swport5 {
+	status = "okay";
+	label = "lan";
+
+	nvmem-cell-names = "mac-address";
+	nvmem-cells = <&macaddr_config_0>;
+	mac-address-increment = <1>;
+};
 
 &wifi0 {
 	pinctrl-0 = <&wifi_pins>;
@@ -320,44 +355,10 @@
 	pinctrl-names = "default";
 	status = "okay";
 };
+
 &blsp1_uart2 {
 	pinctrl-0 = <&serial_1_pins>;
 	pinctrl-names = "default";
 	status = "okay";
 };
 
-&swport4 {
-	status = "okay";
-	label = "lan";
-
-	nvmem-cell-names = "mac-address";
-	nvmem-cells = <&macaddr_config_0>;
-};
-
-&swport5 {
-	status = "okay";
-	label = "wan";
-
-	nvmem-cell-names = "mac-address";
-	nvmem-cells = <&macaddr_config_0>;
-	mac-address-increment = <1>;
-};
-
-&blsp_dma {
-	status = "okay";
-};
-
-&switch {
-	status = "okay";
-};
-
-&mdio {
-	status = "okay";
-};
-
-&watchdog {
-	status = "okay";
-};
-&gmac {
-	status = "okay";
-};
