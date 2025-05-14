@@ -22,7 +22,7 @@
 
 / {
         model = "TP-Link Deco M4R v3";
-        compatible = "tplink,deco-m4r-v3", "qcom,ipq4019";
+        compatible = "tp-link,deco-m4r-v3", "qcom,ipq4019";
 
 		chosen {
 			bootargs-append = " root=/dev/mtdblock15 rootfstype=squashfs loglevel=8";
@@ -296,6 +296,18 @@
 	};
 };
 
+&crypto {
+	status = "okay";
+};
+
+&cryptobam {
+	status = "okay";
+};
+
+&prng {
+	status = "okay";
+};
+
 &blsp_dma {
 	status = "okay";
 };
@@ -311,6 +323,7 @@
 &watchdog {
 	status = "okay";
 };
+
 &gmac {
 	status = "okay";
 };
