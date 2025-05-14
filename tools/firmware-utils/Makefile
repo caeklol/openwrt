@@ -10,10 +10,10 @@ PKG_NAME:=firmware-utils
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL=$(PROJECT_GIT)/project/firmware-utils.git
-PKG_SOURCE_DATE:=2025-02-16
-PKG_SOURCE_VERSION:=5d1446bf57d6490573dc71f10c05e83b36d44374
-PKG_MIRROR_HASH:=e054ea416f5a596f681bba593f71dfbe8149361432d7c17f2374c60dfe227749
+PKG_SOURCE_URL=https://github.com/caeklol/firmware-utils.git
+PKG_SOURCE_DATE:=2024-12-23
+PKG_SOURCE_VERSION:=625ff6fa1c10afba064cbc1b5c85fae7f2dcd8cb
+PKG_MIRROR_HASH:=skip
 
 include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/cmake.mk
