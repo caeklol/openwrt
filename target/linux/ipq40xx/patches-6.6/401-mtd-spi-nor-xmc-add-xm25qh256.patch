@@ -1,0 +1,12 @@
+--- a/drivers/mtd/spi-nor/xmc.c	2025-05-15 00:03:58.383438172 +0800
++++ b/drivers/mtd/spi-nor/xmc.c	2025-05-15 00:07:33.794406341 +0800
+@@ -22,6 +22,9 @@
+ 	{ "XM25QH128C", INFO(0x204018, 0, 64 * 1024, 256)
+ 		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ |
+ 			      SPI_NOR_QUAD_READ) },
++	{ "XM25QH256", INFO(0x206019, 0, 64 * 1024, 512)
++		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ |
++			      SPI_NOR_QUAD_READ) },
+ };
+ 
+ const struct spi_nor_manufacturer spi_nor_xmc = {
