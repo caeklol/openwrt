@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+
 #include "qcom-ipq4019.dtsi"
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
@@ -13,6 +15,10 @@
 		};
 
 		aliases {
+			led-boot = &led_blue;
+			led-failsafe = &led_red;
+			led-running = &led_green;
+			led-upgrade = &led_red;
 			label-mac-device = &swport4;
 		};
 
@@ -29,21 +35,21 @@
 		leds {
                 compatible = "gpio-leds";
 
-                led-red {
+                led_red: led-0 {
                         label = "rgb:red";
                         gpios = <&tlmm 28 GPIO_ACTIVE_LOW>;
 						color = <LED_COLOR_ID_RED>;
 						function = LED_FUNCTION_FAULT;
                 };
 
-                led-green {
+                led_green: led-1 {
                         label = "rgb:green";
                         gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
 						color = <LED_COLOR_ID_GREEN>;
 						function = LED_FUNCTION_POWER;
                 };
 
-                led-blue {
+                led_blue: led-2 {
                         label = "rgb:blue";
                         gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
 						color = <LED_COLOR_ID_BLUE>;
@@ -109,15 +115,6 @@
 			drive-strength = <2>;
 			bias-disable;
 			output-high;
-		};
-	};
-
-	i2c_0_pins: i2c_0_pinmux {
-		pinmux {
-			pins = "gpio20", "gpio21";
-			function = "blsp_i2c0";
-			drive-strength = <16>;
-			bias-disable;
 		};
 	};
 
