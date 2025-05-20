@@ -6,10 +6,10 @@
 
 / {
         model = "TP-Link Deco M4R v3";
-        compatible = "tplink,deco-m4r-v3", "qcom,ipq4019", "qcom,ipq4019-ap.dk04.1-c1";
+        compatible = "tplink,deco-m4r-v3", "qcom,ipq4019";
 
 		chosen {
-			bootargs-append = " root=/dev/mtdblock15 loglevel=8";
+			bootargs-append = " root=/dev/mtdblock15";
 		};
 
 		aliases {
@@ -25,6 +25,31 @@
 				linux,code = <KEY_RESTART>;
 			};
 		};
+
+		leds {
+                compatible = "gpio-leds";
+
+                led-red {
+                        label = "rgb:red";
+                        gpios = <&tlmm 28 GPIO_ACTIVE_LOW>;
+						color = <LED_COLOR_ID_RED>;
+						function = LED_FUNCTION_FAULT;
+                };
+
+                led-green {
+                        label = "rgb:green";
+                        gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
+						color = <LED_COLOR_ID_GREEN>;
+						function = LED_FUNCTION_POWER;
+                };
+
+                led-blue {
+                        label = "rgb:blue";
+                        gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
+						color = <LED_COLOR_ID_BLUE>;
+						function = LED_FUNCTION_BOOT;
+                };
+        };
 
 		soc {
 			tcsr@194b000 {
